@@ -5,7 +5,11 @@ This tool can be used to perform basic figure or character segmentation and extr
 
 <picture>
   <img src="./assets/test1_blend.png" height=250, width=250>
+</picture>
+<picture>
   <img src="./assets/test1_mask.png" height=250, width=250>
+</picture>
+<picture>
   <img src="./assets/test1_bbox.png" height=250, width=250>
 </picture>
 
