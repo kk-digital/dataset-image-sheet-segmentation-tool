@@ -4,12 +4,8 @@
 This tool can be used to perform basic figure or character segmentation and extraction from line-style artwork sheet. The tool is based-on classical image processing (without deep-learning) methods. The tool processes input image of line-style artwork / drawing containing figures / characters and create segmented invidual image of character and save it in specified output directory. The tool can also create segmentation mask binary image, original image blended with segmentation mask and original image embedded with bounding boxes on detected characters. 
 
 <picture>
-  <img src="./assets/test1_bbox.png" height=250, width=250>
-</picture>
-<picture>
-  <img src="./assets/test1_bbox.png" height=250, width=250>
-</picture>
-<picture>
+  <img src="./assets/test1_blend.png" height=250, width=250>
+  <img src="./assets/test1_mask.png" height=250, width=250>
   <img src="./assets/test1_bbox.png" height=250, width=250>
 </picture>
 
