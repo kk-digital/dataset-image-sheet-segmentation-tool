@@ -58,4 +58,5 @@ target/
 
 testfiles
 input
-output/test_output/
+# output/test_output/
+output/*
