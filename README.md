@@ -24,17 +24,17 @@ pip install -r ./requirements.txt
 * Extract the characters in provided test image `./test-images/test1.jpg` and write the resulting image files in automatically created directory `./output/test1`. 
 
 ```sh
-python ExtractCharacter.py --in_file='test-images/test1.jpg' --shade_overlap 
+python ExtractCharacter.py --input_path='test-images/test1.jpg' --shade_overlap 
 ```
 
 * or with complete arguments and option as follows.
 
 ```sh
-python ExtractCharacter.py --in_file='test-images/test1.jpg' --out_dir=./output --pad_factor=0.1 --j_thres=3, --s_thres=7 --min_size=500 --shade_overlap
+python ExtractCharacter.py --input_path='test-images/test1.jpg' --out_dir=./output --pad_factor=0.1 --j_thres=3, --s_thres=7 --min_size=500 --shade_overlap
 ```
 
 ## CLI Arguments and Options
-* `in_file` _[string]_ - _[required]_ - Path to input file
+* `input-path` _[string]_ - _[required]_ - Path to input file
 * `out_dir` _[string]_ - Directory for writing output files. This default to `.output/`
 * `pad_factor` _[float]_ - _[default=0.1]_ - Padding (extension) factor for bounding box and output image. The valid value is 0.0 (no extension) to 1.0 (extend the segmentation size 100% from original bounding box proposal for all detected characters. 
 * `--j_thres` _[int]_ - _[default=3]_ - Join threshold for adjusting the integration level of individual characters / object. Increase this value if the tool fails to segment large characters / objects or if the drawing lines is too faint. The valid value is 3 to 15.
@@ -48,17 +48,17 @@ python ExtractCharacter.py --in_file='test-images/test1.jpg' --out_dir=./output 
 * Create segmentation mask binary image in provided test image `./test-images/test1.jpg` and write the resulting image files in `./output` directory. 
 
 ```sh
-python SegmentCharacter.py --in_file='test-images/test7.jpg'
+python SegmentCharacter.py --input_path='test-images/test3.jpg'
 ```
 
 * In addition, `--bbox` and `--blend` option can be used to create original image embedded with bounding boxes and original image blended with segmentation mask respectively. The resulting image files will be writen in `./output` directory. 
 
 ```sh
-python SegmentCharacter.py --in_file='test-images/test7.jpg' --bbox --blend
+python SegmentCharacter.py --input_path='test-images/test3.jpg' --bbox --blend
 ```
 
 ## CLI Arguments and Options
-* `in_file` _[string]_ - _[required]_ - Path to input file
+* `input_path` _[string]_ - _[required]_ - Path to input file
 * `out_dir` _[string]_ - Directory for writing output files. This default to `.output/`
 * `pad_factor` _[float]_ - _[default=0.1]_ - Padding (extension) factor for bounding box and output image. The valid value is 0.0 (no extension) to 1.0 (extend the segmentation size 100% from original bounding box proposal for all detected characters. 
 * `--j_thres` _[int]_ - _[default=3]_ - Join threshold for adjusting the integration level of individual characters / object. Increase this value if the tool fails to segment large characters / objects or if the drawing lines is too faint. The valid value is 3 to 15.

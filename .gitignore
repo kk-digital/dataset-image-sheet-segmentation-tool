@@ -60,3 +60,4 @@ testfiles
 input
 # output/test_output/
 output/*
+output/

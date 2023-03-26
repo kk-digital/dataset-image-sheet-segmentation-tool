@@ -4,7 +4,7 @@ from CharacterSheetExtractor import CharacterSheetExtractor as Extractor
 
 # Argument handling
 parser = argparse.ArgumentParser()
-parser.add_argument('--in_file', type = str, required=True)
+parser.add_argument('--input_path', type = str, required=True)
 parser.add_argument('--out_dir', default = 'output/', type = str)
 parser.add_argument('--pad_factor', default = 0.1, type = float)
 parser.add_argument('--j_thres', default = 3, type = int)
@@ -14,7 +14,7 @@ parser.add_argument('--shade_overlap', action=argparse.BooleanOptionalAction)
 args = parser.parse_args()
 
 # Path to input file
-in_file = args.in_file
+input_path = args.input_path
 # Output directory
 out_dir = args.out_dir
 # Padding factor for output image (0-1.0)
@@ -51,7 +51,7 @@ t1 = time.time()
 # Extractor object
 extractor = Extractor()
 # Individual character extraction and writing to individual file
-extractor.extract_characters(in_file, out_dir, pad_factor, j_thres, s_thres, min_size, shade_overlap)
+extractor.extract_characters(input_path, out_dir, pad_factor, j_thres, s_thres, min_size, shade_overlap)
 # End time
 t2 = time.time()
 
