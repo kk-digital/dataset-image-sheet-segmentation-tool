@@ -328,8 +328,10 @@ class CharacterSheetExtractor(object):
                 bbox_dicts.append({'width':w, 'height':h, 'origin_x':x, 'origin_y':y, 'center_x':x+int(w/2), 'center_y':y+int(h/2)})
 
             # Creating output JSON
-            out_json = {'hash':hash_id, 'file_name':input_path, 'img_size':(img.shape[1], img.shape[0]), 'n_bbox':len(lcts), 'bboxes':bbox_dicts}
+            out_json = {'hash':hash_id, 'file_name':file, 'img_size':(img.shape[1], img.shape[0]), 'n_bbox':len(lcts), 'bboxes':bbox_dicts}
             # Saving to output JSON file
-            self.save_to_json_file(out_json, output_path = f'{out_dir}/output.json')
+            out_file_name = 'output.json'
+            out_file_path = os.path.join(sub_dir, out_file_name)
+            self.save_to_json_file(out_json, output_path = out_file_path)
 
 
