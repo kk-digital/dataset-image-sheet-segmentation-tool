@@ -170,7 +170,6 @@ class CharacterSheetExtractor(object):
             # Creating output sub dir based on input file name
             input_file_name = os.path.splitext(os.path.split(input_path)[-1])[0]
             sub_dir = os.path.join(out_dir, input_file_name)
-            os.makedirs(sub_dir, exist_ok=True)
 
         else:
             # It is a directory. Add path of all files to the list
@@ -180,7 +179,6 @@ class CharacterSheetExtractor(object):
             # Creating output sub dir based on input file name
             input_dir_name = os.path.split(os.path.dirname(f'{input_path}/'))[-1]
             sub_dir = os.path.join(out_dir, input_dir_name)
-            os.makedirs(sub_dir, exist_ok=True)
 
         print ('Segmenting characters / objects and extract to individual image...')
 
@@ -203,7 +201,8 @@ class CharacterSheetExtractor(object):
             print (f'Objects found: {len(lcts)}')
             # Create bounding boxes
             bboxes = self.create_bboxes(lcts)
-            
+            # Get the number of digits in the original filename
+            num_digits = len(os.path.splitext(os.path.split(file)[-1])[0])
             i = 0
             for bbox in bboxes:
                 print (f'Processing object {i+1} from {len(bboxes)}')
@@ -214,20 +213,14 @@ class CharacterSheetExtractor(object):
                     char = self.shade_overlap(char)
 
                 # Writing to file
-                if not os.path.isfile(input_path):
-                    # Input path is directory. So create a sub-sub directory to contain segmentation result from each image
-                    sub_sub_dir = os.path.join(sub_dir, os.path.splitext(os.path.split(file)[-1])[0])
-                    os.makedirs(sub_sub_dir, exist_ok=True)
-                    # Write the file in sub-sub directory
-                    file_name = f'{sub_sub_dir}/object_{i}.png'
-                    print(file_name)
-                    cv.imwrite(file_name, char)
-                else:
-                    # Input path is a single file. So Write the file in sub directory
-                    file_name = f'{sub_dir}/object_{i}.png'
-                    print (file_name)
-                    cv.imwrite(file_name, char)
+                base_file_name = 's' + os.path.splitext(os.path.split(file)[-1])[0] # This is the 's<source_name>' part
+                # Write the file directly to output directory, without creating sub-sub directories
+                file_name = f'{out_dir}/{base_file_name}_e{i+1:0{num_digits}d}.png'
+                print(file_name)
+                cv.imwrite(file_name, char)
                 i+=1
+
+
                 
 
             # Creating dictionary for all bboxes
@@ -240,7 +233,7 @@ class CharacterSheetExtractor(object):
             # Creating output JSON
             out_json = {'hash':hash_id, 'file_name':file, 'img_size':(img.shape[1], img.shape[0]), 'n_bbox':len(lcts), 'bboxes':bbox_dicts}
             # Saving to output JSON file
-            self.save_to_json_file(out_json, output_path = f'{sub_dir}/output.json')
+            self.save_to_json_file(out_json, output_path = f'{out_dir}/output.json')
 
 
     def segment_characters(self, input_path, out_dir, j_thres, s_thres, min_size, create_bbox, bbox_color, bbox_line_width, create_blend):
