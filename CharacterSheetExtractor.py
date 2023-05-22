@@ -183,7 +183,6 @@ class CharacterSheetExtractor(object):
         print ('Segmenting characters / objects and extract to individual image...')
 
         for file in files:  
-            
             try:
                 img = cv.imread(file, 1)
             except Exception as e:
@@ -214,9 +213,13 @@ class CharacterSheetExtractor(object):
 
                 # Writing to file
                 base_file_name = 's' + os.path.splitext(os.path.split(file)[-1])[0] # This is the 's<source_name>' part
-                # Write the file directly to output directory, without creating sub-sub directories
-                file_name = f'{out_dir}/{base_file_name}_e{i+1:0{num_digits}d}.png'
-                print(file_name)
+                print(f'base_file_name: {base_file_name}')  # Debug line
+                # Create directory if it doesn't exist
+                output_dir = os.path.join(out_dir, base_file_name)
+                os.makedirs(output_dir, exist_ok=True)
+                # Write the file to the output directory
+                file_name = f'{output_dir}/{base_file_name}_e{i+1:0{num_digits}d}.png'
+                print(f'file_name: {file_name}')  # Debug line
                 cv.imwrite(file_name, char)
                 i+=1
 
@@ -233,7 +236,7 @@ class CharacterSheetExtractor(object):
             # Creating output JSON
             out_json = {'hash':hash_id, 'file_name':file, 'img_size':(img.shape[1], img.shape[0]), 'n_bbox':len(lcts), 'bboxes':bbox_dicts}
             # Saving to output JSON file
-            self.save_to_json_file(out_json, output_path = f'{out_dir}/output.json')
+            self.save_to_json_file(out_json, output_path = f'{out_dir}/{base_file_name}/output.json')
 
 
     def segment_characters(self, input_path, out_dir, j_thres, s_thres, min_size, create_bbox, bbox_color, bbox_line_width, create_blend):
